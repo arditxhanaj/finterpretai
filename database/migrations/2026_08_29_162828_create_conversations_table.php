@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('conversations', function (Blueprint $table) {
             $table->id();
             $table->ulid('ulid')->unique()->index();
-            $table->foreignId('client_id')->constrained();
+            $table->foreignId('client_id')->constrained()->cascadeOnDelete();
             $table->enum('status', ['open', 'closed'])->default('open');
             $table->string('subject')->nullable();
             $table->timestamp('last_message_at')->nullable();
