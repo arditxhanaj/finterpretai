@@ -4,6 +4,9 @@ use App\Enums\Sender;
 use App\Models\Conversation;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use App\Events\MessageSent;
+use Livewire\Attributes\On;
+
 
 new #[Layout('layouts.chat')] class extends Component
 {
@@ -15,14 +18,22 @@ new #[Layout('layouts.chat')] class extends Component
     {
         $this->validate(['body' => ['required', 'string', 'max:2000']]);
 
-        $this->conversation->messages()->create([
+        $message = $this->conversation->messages()->create([
             'sender' => Sender::Client,
             'body' => $this->body,
         ]);
 
         $this->conversation->update(['last_message_at' => now()]);
 
+        broadcast(new MessageSent($message));
+
         $this->body = '';
+    }
+
+    #[On('echo:conversations.{conversation.ulid},.message.sent')]
+    public function onMessageSent(): void
+    {
+        //
     }
 }; ?>
 
