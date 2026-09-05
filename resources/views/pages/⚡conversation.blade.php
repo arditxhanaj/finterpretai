@@ -20,28 +20,11 @@ new #[Layout('layouts.chat')] class extends Component
             'body' => $this->body,
         ]);
 
+        $this->conversation->update(['last_message_at' => now()]);
+
         $this->body = '';
     }
 }; ?>
 
-<div class="flex h-screen flex-col">
-    <header class="shrink-0 border-b p-4">
-        {{ $conversation->subject }}
-    </header>
-
-    <div class="flex-1 overflow-y-auto p-4 space-y-3">
-        @foreach ($conversation->messages as $message)
-            <div wire:key="{{ $message->id }}"
-                 class="flex {{ $message->sender === Sender::Client ? 'justify-end' : 'justify-start' }}">
-                <div class="max-w-[75%] rounded-lg px-4 py-2 {{ $message->sender === Sender::Client ? 'bg-blue-600 text-white' : 'bg-gray-100' }}">
-                    {{ $message->body }}
-                </div>
-            </div>
-        @endforeach
-    </div>
-
-    <form wire:submit="send" class="shrink-0 border-t p-4 flex gap-2">
-        <flux:input wire:model="body" class="flex-1" />
-        <flux:button type="submit" variant="primary">Send</flux:button>
-    </form>
-</div>
+{{-- client --}}
+<x-chat-thread :conversation="$conversation" :viewer="\App\Enums\Sender::Client" class="h-full"/>

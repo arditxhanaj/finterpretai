@@ -3,8 +3,11 @@
     <head>
         @include('partials.head')
     </head>
-    <body class="antialiased">
-        {{ $slot }}
-        @fluxScripts
-    </body>
+    <body class="h-screen antialiased">
+        <div class="mx-auto h-full max-w-4xl p-4 sm:p-6">
+            {{ $slot }}
+        </div>
+    @fluxScripts
+</body>
+
 </html>

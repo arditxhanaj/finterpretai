@@ -14,7 +14,7 @@ class Conversation extends Model
 {
     use HasUlids;
 
-    protected $fillable = ['client_id', 'subject', 'status'];
+    protected $fillable = ['client_id', 'subject', 'status', 'last_message_at'];
 
     public function uniqueIds(): array
     {
