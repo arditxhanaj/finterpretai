@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Anthropic\Client;
+use Anthropic\Messages\TextBlock;
 
 class Translator
 {
@@ -16,10 +17,10 @@ class Translator
             outputConfig: ['effort' => 'low'],
             system: [[
                 'type' => 'text',
-                'text' => "You translate messages between an accounting firm and its clients. "
+                'text' => 'You translate messages between an accounting firm and its clients. '
                     ."Translate from {$from} to {$to}. Preserve tone, keep accounting and tax "
-                    ."terminology accurate, and keep numbers and dates exactly as written. "
-                    ."Reply with the translation only — no preamble, no notes, no quotes.",
+                    .'terminology accurate, and keep numbers and dates exactly as written. '
+                    .'Reply with the translation only — no preamble, no notes, no quotes.',
             ]],
             messages: [
                 ['role' => 'user', 'content' => $text],
@@ -27,7 +28,7 @@ class Translator
         );
 
         foreach ($message->content as $block) {
-            if ($block->type === 'text') {
+            if ($block instanceof TextBlock) {
                 return trim($block->text);
             }
         }

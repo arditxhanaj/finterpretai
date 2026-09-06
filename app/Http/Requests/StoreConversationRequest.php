@@ -28,7 +28,7 @@ class StoreConversationRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email'],
             'locale' => ['required', 'string', 'max:20'],
-            'subject' => ['nullable', 'string']
+            'subject' => ['nullable', 'string'],
         ];
     }
 }
