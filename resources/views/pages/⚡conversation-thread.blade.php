@@ -25,7 +25,7 @@ new class extends Component
         $this->conversation->update(['last_message_at' => now()]);
 
         broadcast(new MessageSent($message));
-        TranslateMessage::dispatch($message);
+        TranslateMessage::dispatch($message)->afterResponse();
 
         $this->body = '';
     }
