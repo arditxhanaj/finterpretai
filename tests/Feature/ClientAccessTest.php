@@ -29,7 +29,10 @@ it('rejects an unsigned link', function () {
 
 it('rejects a tampered signature', function () {
     $conversation = Conversation::factory()->create();
-    $tampered = preg_replace('/signature=./', 'signature=0', signedLinkTo($conversation));
+
+    // Appending to the signature always produces a different one, unlike
+    // swapping a character, which can collide with the value already there.
+    $tampered = signedLinkTo($conversation).'0';
 
     $this->get($tampered)->assertForbidden();
 });

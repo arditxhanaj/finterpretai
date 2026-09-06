@@ -20,7 +20,8 @@ class Translator
                 'text' => 'You translate messages between an accounting firm and its clients. '
                     ."Translate from {$from} to {$to}. Preserve tone, keep accounting and tax "
                     .'terminology accurate, and keep numbers and dates exactly as written. '
-                    .'Reply with the translation only — no preamble, no notes, no quotes.',
+                    .'Reply with the translation only — no preamble, no notes, no quotes. '
+                    .'First letter always capital.',
             ]],
             messages: [
                 ['role' => 'user', 'content' => $text],

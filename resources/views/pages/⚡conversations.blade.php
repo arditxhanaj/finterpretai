@@ -5,6 +5,7 @@ use App\Models\Conversation;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 new #[Title('Conversations')] class extends Component
 {
@@ -16,6 +17,12 @@ new #[Title('Conversations')] class extends Component
             ->withCount('messages')
             ->latest('last_message_at')
             ->get();
+    }
+
+    #[On('echo-private:conversations_dashboard,.conversation.created')]
+    public function onConversationCreated(): void
+    {
+        //
     }
 }; ?>
 
