@@ -5,6 +5,7 @@ use App\Models\Conversation;
 use Livewire\Component;
 use App\Events\MessageSent;
 use Livewire\Attributes\On;
+use App\Jobs\TranslateMessage;
 
 new class extends Component
 {
@@ -24,6 +25,7 @@ new class extends Component
         $this->conversation->update(['last_message_at' => now()]);
 
         broadcast(new MessageSent($message));
+        TranslateMessage::dispatch($message);
 
         $this->body = '';
     }

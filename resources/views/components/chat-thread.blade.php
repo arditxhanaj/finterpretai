@@ -1,4 +1,5 @@
 @props(['conversation', 'viewer'])
+@use('App\Enums\TranslationStatus')
 
 <div {{ $attributes->class('flex min-h-0 flex-col gap-4') }}>
     <div class="shrink-0">
@@ -15,7 +16,14 @@
                 <div class="max-w-[75%] rounded-lg px-4 py-2 {{ $message->sender === $viewer
                     ? 'bg-blue-600 text-white'
                     : 'bg-neutral-200 text-neutral-900 dark:bg-neutral-700 dark:text-neutral-100' }}">
-                    {{ $message->body }}
+                    @if ($message->sender === $viewer)
+                        {{ $message->body }}
+                    @elseif ($message->translation_status === TranslationStatus::Pending)
+                        <span class="italic opacity-60">Translating…</span>
+                    @else
+                        {{ $message->body_translated ?? $message->body }}
+                    @endif
+
                 </div>
             </div>
         @endforeach

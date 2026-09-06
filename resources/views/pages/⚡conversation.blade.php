@@ -6,6 +6,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Events\MessageSent;
 use Livewire\Attributes\On;
+use App\Jobs\TranslateMessage;
 
 
 new #[Layout('layouts.chat')] class extends Component
@@ -26,6 +27,7 @@ new #[Layout('layouts.chat')] class extends Component
         $this->conversation->update(['last_message_at' => now()]);
 
         broadcast(new MessageSent($message));
+        TranslateMessage::dispatch($message);
 
         $this->body = '';
     }
