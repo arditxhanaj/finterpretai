@@ -39,4 +39,8 @@ return [
         'key' => env('ANTHROPIC_API_KEY'),
     ],
 
+    'integration' => [
+        'key' => env('INTEGRATION_API_KEY'),
+    ],
+
 ];
